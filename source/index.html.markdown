@@ -4,23 +4,46 @@ title: Service Objects on Rails
 
 # Service Objects on Rails
 
-There have been much digital ink spilled about service objects in Ruby on 
+There have been much digital ink spilled about service objects in Ruby on
 Rails; what they are, how to use them, and which gems are the most popular. In
-this series, I hope to explain which ones I've found the most useful, along with
-concrete examples of refactorings, starting with issues often found in "vanilla"
-Rails applications, and how the proper application of a particular service
-object in that situation can resolve those issues.
+this series, I hope to explain which ones I've found the most useful, along
+with concrete examples of refactorings, starting with issues often found in
+"vanilla" Rails applications, and how the proper application of a particular
+service object in that situation can resolve those issues.
 
-Much of this is inspired by [Patterns of Enterprise Application Architecture (PoEAA)][poeaa], 
-and similar to that text's premise, these Service Objects are extracted from
-patterns that I've personally found useful in writing medium-sized Rails apps. 
-Who am I to write about this? I've been writing Rails applications professionally for 12 years, starting with 0.11 in 2005. I remember they heady days of "Skinny Controller, Fat Models". I was very involved in experimenting with alternative frameworks, and a core contributor to the Merb and DataMapper projects. I've worked on some of the largest Rails monoliths in existence, and been involved in cleanups, refactorings and extracting microservices. I don't claim to know everything there is to know about Rails, but I've certainly seen a lot, and my goal with these pages is to share this experience and I hope you find it useful. I'm always on the lookout for new techniques and patterns to write clean and pragmatic Rails applications, so I do hope you'll share some back with me.
+Much of this is inspired by [Patterns of Enterprise Application Architecture
+(PoEAA)][poeaa], and similar to that text's premise, these Service Objects are
+extracted from patterns that I've personally found useful in writing
+medium-sized Rails apps.  Who am I to write about this? I've been writing Rails
+applications professionally for 12 years, starting with 0.11 in 2005. I
+remember they heady days of "Skinny Controller, Fat Models". I was very
+involved in experimenting with alternative frameworks, and a core contributor
+to the Merb and DataMapper projects. I've worked on some of the largest Rails
+monoliths in existence, and been involved in cleanups, refactorings and
+extracting microservices. I don't claim to know everything there is to know
+about Rails, but I've certainly seen a lot, and my goal with these pages is to
+share this experience and I hope you find it useful. I'm always on the lookout
+for new techniques and patterns to write clean and pragmatic Rails
+applications, so I do hope you'll share some back with me.
 
-Each section in this series will follow a similar pattern: First, I'll introduce the particular service object, and when it is applicable. Then, I'll have some example code written in the "vanilla" Rails-style that could be improved by the service object, and through a series of refactorings, arrive at the final implementation. Since one of the primary advantages of Service Objects is to make complicated logic more testable, I'll also write some simple test examples. 
+Each section in this series will follow a similar pattern: First, I'll
+introduce the particular service object, and when it is applicable. Then, I'll
+have some example code written in the "vanilla" Rails-style that could be
+improved by the service object, and through a series of refactorings, arrive at
+the final implementation. Since one of the primary advantages of Service
+Objects is to make complicated logic more testable, I'll also write some simple
+test examples.
 
-Since my intention is to demonstrate the application of the Service Objects, I will strive to write them as PORO (plain ol' Ruby objects) at first, and only introduce other libraries if needed. However, if there is a particular gem that I recommend which provides a nice implementation of the pattern, I'll be sure to include links.
+Since my intention is to demonstrate the application of the Service Objects, I
+will strive to write them as PORO (plain ol' Ruby objects) at first, and only
+introduce other libraries if needed. However, if there is a particular gem that
+I recommend which provides a nice implementation of the pattern, I'll be sure
+to include links.
 
-If you spot any issues, please feel free to hit me up on [email][email] or [twitter][twitter], or even better [open an issue][issues] in [this repo on Github][github]. Ok, enough rambling, on to the Service Objects! (hold your applause, please)
+If you spot any issues, please feel free to hit me up on [email][email] or
+[twitter][twitter], or even better [open an issue][issues] in [this repo on
+Github][github]. Ok, enough rambling, on to the Service Objects! (hold your
+applause, please)
 
 ## Service Objects
 
@@ -36,7 +59,7 @@ If you spot any issues, please feel free to hit me up on [email][email] or [twit
   background jobs.
 * [Conductor][conductor-object] If you need both a [Form Object][form-object]
   and [Command Object][command-object], but neither are very complex, then you
-  can roll them together into a since [Conductor][conductor-object]
+  can roll them together into a simple [Conductor][conductor-object]
 * [Query][query-object] Used when loading several models through associations,
   they're useful to avoid accidental N+1 queries. Also helpful for complex
   queries that can them be chained with other query objects or simple

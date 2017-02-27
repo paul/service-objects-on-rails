@@ -1,5 +1,5 @@
 ---
-title: "Service Objects on Rails: Decorators"
+title: Decorators
 ---
 
 # Decorators
